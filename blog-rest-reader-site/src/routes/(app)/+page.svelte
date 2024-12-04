@@ -51,8 +51,8 @@
             </p>
             <a
             href="/{post.id}/"
-            class="m-2 p-1 text-xs absolute right-0 top-0 hover:font-bold">
-                View
+            class="m-2 p-1 text-xs absolute right-2 bottom-0 hover:font-bold">
+                comments
             </a>
         </div>
     {:else}
