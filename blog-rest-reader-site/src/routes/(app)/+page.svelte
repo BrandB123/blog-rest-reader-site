@@ -37,6 +37,9 @@
 
 
     onMount(async () => {
+        if (!localStorage.getItem("jwtAuth")){
+            goto("/log-in")
+        }
         posts = await getPosts();
     });
 
@@ -51,20 +54,22 @@
 
 {:then posts}
     {#each posts as post}
-        <div
-        class="border border-black rounded-xl my-4 mx-8 p-4 bg-neutral-200 relative">
-            <h4 class="font-bold text-xl">
-                {post.title}
-            </h4>
-            <p class="text-sm">
-                {post.message}
-            </p>
-            <a
-            href="/{post.id}/"
-            class="m-2 p-1 text-xs absolute right-2 bottom-0 hover:font-bold">
-                comments
-            </a>
-        </div>
+        {#if post.published}
+            <div
+            class="border border-black rounded-xl my-4 mx-8 pt-4 pb-6 px-4 bg-neutral-200 relative">
+                <h4 class="font-bold text-xl">
+                    {post.title}
+                </h4>
+                <p class="text-sm">
+                    {post.message}
+                </p>
+                <a
+                href="/{post.id}/"
+                class="mx-2 p-1 text-xs absolute right-2 bottom-1 hover:font-bold">
+                    comments
+                </a>
+            </div>
+        {/if}
     {:else}
         <p class="text-center mt-8">
             No blog posts currently.
