@@ -13,7 +13,7 @@
                   method: "POST",
                   body: JSON.stringify({
                       name,
-                      email, 
+                      email: email.toLowerCase(), 
                       password, 
                       authorStatus: false
                   }),
@@ -31,7 +31,7 @@
               }
               
               if (!response.ok){
-                  throw new Error("Response Status: ", response.status);
+                  throw new Error(`Response Status: ${response.status}`);
               }
   
               goto('/log-in')
@@ -39,7 +39,7 @@
           } catch(err) {
               console.error(err);
   
-              if (err.name === 'TypeError'){
+              if ((err as Error).name === 'TypeError'){
                   alert("Service currently unavailable. Sorry for the inconvenience. Please try again later.")
               }
           }

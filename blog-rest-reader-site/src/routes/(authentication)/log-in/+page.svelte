@@ -9,7 +9,7 @@
             const response = await fetch(`${import.meta.env.VITE_API_URL}api/login`, {
                 method: "POST",
                 body: JSON.stringify({
-                    username,
+                    username: username.toLowerCase(),
                     password
                 }),
                 headers: {
@@ -22,7 +22,7 @@
             }
 
             if (!response.ok){
-                throw new Error("Response Status: ", response.status)
+                throw new Error(`Response Status: ${response.status}`)
             }
 
             const json = await response.json();
@@ -33,7 +33,7 @@
         } catch(err){
             console.error(err);
 
-            if (err.name === 'TypeError'){
+            if ((err as Error).name === 'TypeError'){
                 alert("Service currently unavailable. Sorry for the inconvenience. Please try again later.")
             }
         }

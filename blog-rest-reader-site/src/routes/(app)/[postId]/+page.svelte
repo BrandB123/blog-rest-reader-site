@@ -1,10 +1,27 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
+
+
+    type Post = {
+        id: number;
+        author_id: number;
+        title: string;
+        message: string;
+        published: boolean;
+        timestamp: Date;
+    }
+
+    type Comment = {
+        id: number;
+        message: string;
+        name: string
+    }
+
   
     let { data } = $props();
-    let post = $state({});
-    let comments = $state([]);
+    let post = $state({}) as Post;
+    let comments = $state([]) as Comment[];
     let commentMessage = $state("");
   
     async function getPost(postId: number){
@@ -20,7 +37,7 @@
             }
         
             if (!response.ok){
-                throw new Error("Response Status: ", response.status);
+                throw new Error(`Response Status: ${response.status}`);
             }
         
             const json = await response.json();
@@ -41,7 +58,7 @@
             })
 
             if (!response.ok){
-                throw new Error("Response status: ", response.status)
+                throw new Error(`Response Status: ${response.status}`)
             }
 
             const json = await response.json();
@@ -69,7 +86,7 @@
             // HANDLE SPECIFIC ERRORS HERE
 
             if (!response.ok){
-                throw new Error("Response Status: ", response.status);
+                throw new Error(`Response Status: ${response.status}`);
             }
 
             comments = await getComments();
